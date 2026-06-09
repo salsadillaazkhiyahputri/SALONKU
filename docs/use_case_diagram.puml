@@ -16,17 +16,14 @@ skinparam rectangle {
   BorderColor Rose
 }
 
-actor "Pengunjung (Guest)" as Guest
 actor "Pelanggan (Customer)" as Customer
 actor "Admin Salon" as Admin
 
 rectangle "Sistem Reservasi SalonKu" {
-  ' Guest Cases
+  ' Customer Cases (termasuk sebelum login)
   usecase "Melihat Landing Page" as UC1
   usecase "Mendaftar Akun (Register)" as UC2
   usecase "Masuk (Login)" as UC3
-  
-  ' Customer Cases
   usecase "Keluar (Logout)" as UC4
   usecase "Melihat Katalog Layanan" as UC5
   usecase "Membuat Reservasi Baru" as UC6
@@ -41,12 +38,9 @@ rectangle "Sistem Reservasi SalonKu" {
   usecase "Memperbarui Status Reservasi" as UC13
 }
 
-' Relasi Pengunjung
-Guest --> UC1
-Guest --> UC2
-Guest --> UC3
-
 ' Relasi Pelanggan (Customer)
+Customer --> UC1
+Customer --> UC2
 Customer --> UC3
 Customer --> UC4
 Customer --> UC5

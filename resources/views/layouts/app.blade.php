@@ -26,6 +26,10 @@
                            class="relative px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 {{ request()->routeIs('admin.dashboard') ? 'text-white bg-gradient-to-r from-rose-500 to-pink-500 shadow-md shadow-rose-200 hover:-translate-y-0.5' : 'text-gray-600 hover:text-rose-600 hover:bg-rose-50' }}">
                             Dashboard
                         </a>
+                        <a href="{{ route('admin.categories.index') }}"
+                           class="relative px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 {{ request()->routeIs('admin.categories.*') ? 'text-white bg-gradient-to-r from-rose-500 to-pink-500 shadow-md shadow-rose-200 hover:-translate-y-0.5' : 'text-gray-600 hover:text-rose-600 hover:bg-rose-50' }}">
+                            Kelola Kategori
+                        </a>
                         <a href="{{ route('admin.services.index') }}"
                            class="relative px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 {{ request()->routeIs('admin.services.*') ? 'text-white bg-gradient-to-r from-rose-500 to-pink-500 shadow-md shadow-rose-200 hover:-translate-y-0.5' : 'text-gray-600 hover:text-rose-600 hover:bg-rose-50' }}">
                             Kelola Layanan
