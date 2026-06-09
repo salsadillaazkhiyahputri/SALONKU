@@ -8,9 +8,10 @@ use App\Http\Controllers\StylistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return auth()->check()
-        ? redirect(auth()->user()->isAdmin() ? route('admin.dashboard') : route('customer.dashboard'))
-        : redirect()->route('login');
+    if (auth()->check()) {
+        return redirect(auth()->user()->isAdmin() ? route('admin.dashboard') : route('customer.dashboard'));
+    }
+    return view('welcome');
 });
 
 // Guest routes

@@ -22,7 +22,7 @@
                     Tersedia Hari Ini
                 </span>
                 <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-7xl">
-                    <span class="block text-pink-600 mb-2 font-serif italic drop-shadow-sm">The Menu</span>
+                    <span class="block text-pink-600 mb-2 font-serif italic drop-shadow-sm">Layanan</span>
                     Salon & Spa
                 </h1>
                 <p class="mt-6 text-lg text-gray-700 font-medium leading-relaxed max-w-xl">
@@ -31,7 +31,7 @@
                 
                 <div class="mt-10 flex items-center gap-4">
                     <a href="#katalog" class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-pink-600 px-8 py-4 text-sm font-bold text-white transition-all hover:from-rose-600 hover:to-pink-700 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-200">
-                        Lihat Katalog Menu
+                        Lihat Layanan
                     </a>
                 </div>
             </div>
@@ -55,14 +55,14 @@
             <p class="mt-4 text-lg text-gray-600">Telusuri berbagai menu perawatan unggulan kami.</p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
             @foreach($superCategories as $superName => $categories)
                 @php
                     $superImage = $superImages[$superName] ?? 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80';
                 @endphp
                 
                 <!-- Card Super Kategori -->
-                <button onclick="openModal('modal-{{ Str::slug($superName) }}')" class="group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm border border-rose-50 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-rose-200 text-left w-full focus:outline-none focus:ring-4 focus:ring-rose-200">
+                <div onclick="openModal('modal-{{ Str::slug($superName) }}')" class="cursor-pointer group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm border border-rose-50 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-rose-200 text-left w-full focus:outline-none focus:ring-4 focus:ring-rose-200">
                     <div class="aspect-square w-full overflow-hidden bg-rose-50 relative">
                         <img src="{{ $superImage }}" alt="{{ $superName }}" class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" />
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent transition-opacity duration-300 group-hover:opacity-80"></div>
@@ -74,7 +74,7 @@
                             <h3 class="text-base sm:text-lg font-extrabold font-serif leading-tight group-hover:text-rose-200 transition-colors drop-shadow-sm">{{ $superName }}</h3>
                         </div>
                     </div>
-                </button>
+                </div>
 
                 <!-- Modal List Layanan untuk Super Kategori ini -->
                 <div id="modal-{{ Str::slug($superName) }}" class="fixed inset-0 z-50 hidden bg-gray-900/60 backdrop-blur-md transition-opacity" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -15,9 +15,6 @@
             <!-- Logo -->
             <a href="{{ auth()->check() ? (auth()->user()->isAdmin() ? route('admin.dashboard') : route('customer.dashboard')) : route('login') }}"
                class="flex items-center gap-3 group shrink-0">
-                <div class="flex h-12 w-12 items-center justify-center rounded-[1.25rem] bg-gradient-to-tr from-rose-500 to-pink-500 text-lg font-black text-white shadow-md shadow-rose-200 transition-all duration-300 group-hover:scale-105 group-hover:rotate-6 group-hover:shadow-rose-300">
-                    SK
-                </div>
                 <span class="text-xl sm:text-2xl font-black tracking-tight text-gray-900">Salon<span class="text-rose-500">Ku</span></span>
             </a>
 
