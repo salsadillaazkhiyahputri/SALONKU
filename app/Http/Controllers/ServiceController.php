@@ -36,11 +36,13 @@ class ServiceController extends Controller
             'price' => ['required', 'integer', 'min:0'],
             'duration_minutes' => ['required', 'integer', 'min:15', 'max:480'],
             'is_active' => ['boolean'],
+            'is_starting_price' => ['boolean'],
         ]);
 
         Service::create([
             ...$validated,
             'is_active' => $request->boolean('is_active', true),
+            'is_starting_price' => $request->boolean('is_starting_price', false),
         ]);
 
         return redirect()->route('admin.services.index')
@@ -64,11 +66,13 @@ class ServiceController extends Controller
             'price' => ['required', 'integer', 'min:0'],
             'duration_minutes' => ['required', 'integer', 'min:15', 'max:480'],
             'is_active' => ['boolean'],
+            'is_starting_price' => ['boolean'],
         ]);
 
         $service->update([
             ...$validated,
             'is_active' => $request->boolean('is_active'),
+            'is_starting_price' => $request->boolean('is_starting_price'),
         ]);
 
         return redirect()->route('admin.services.index')

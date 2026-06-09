@@ -16,12 +16,12 @@ class ReservationController extends Controller
 {
     public function customerDashboard(): View
     {
-        $superCategories = \App\Models\Category::with(['services' => function ($query) {
+        $categories = \App\Models\Category::with(['services' => function ($query) {
             $query->where('is_active', true)->orderBy('name');
-        }])->get()->groupBy('parent_category');
+        }])->get();
 
         return view('customer.dashboard', [
-            'superCategories' => $superCategories,
+            'categories' => $categories,
         ]);
     }
 

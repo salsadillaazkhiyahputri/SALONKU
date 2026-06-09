@@ -21,11 +21,7 @@
             <div class="bg-gradient-to-r from-rose-50 to-pink-50 px-6 py-4 border-b border-rose-100 flex items-center justify-between">
                 <div>
                     <h2 class="text-xl font-bold text-gray-900">{{ $category->name }}</h2>
-                    @if($category->parent_category)
-                        <span class="inline-flex mt-1 rounded-md bg-rose-100 px-2.5 py-0.5 text-xs font-semibold text-rose-800">
-                            Bagian dari: {{ $category->parent_category }}
-                        </span>
-                    @endif
+
                 </div>
                 <span class="text-sm font-bold text-rose-500">{{ $category->services->count() }} Layanan</span>
             </div>

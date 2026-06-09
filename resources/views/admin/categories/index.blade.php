@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Kelola Kategori</h1>
-            <p class="mt-1 text-gray-600">CRUD Super Kategori dan Sub-Kategori</p>
+            <p class="mt-1 text-gray-600">CRUD Kategori Utama SalonKu</p>
         </div>
         <a href="{{ route('admin.categories.create') }}"
            class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:from-rose-600 hover:to-pink-700">
@@ -21,8 +21,7 @@
                 <thead class="bg-rose-50/50">
                     <tr class="text-xs uppercase tracking-wide text-gray-500">
                         <th class="px-6 py-4">Gambar</th>
-                        <th class="px-6 py-4">Nama Sub Kategori</th>
-                        <th class="px-6 py-4">Super Kategori</th>
+                        <th class="px-6 py-4">Nama Kategori</th>
                         <th class="px-6 py-4">Aksi</th>
                     </tr>
                 </thead>
@@ -40,11 +39,7 @@
                                 <p class="font-bold text-gray-900">{{ $category->name }}</p>
                                 <p class="text-xs text-gray-500">{{ Str::limit($category->description, 50) }}</p>
                             </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-rose-100 text-rose-800">
-                                    {{ $category->parent_category ?: 'Utama' }}
-                                </span>
-                            </td>
+
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
                                     <a href="{{ route('admin.categories.edit', $category) }}"

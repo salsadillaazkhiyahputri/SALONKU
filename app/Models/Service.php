@@ -16,6 +16,7 @@ class Service extends Model
         'name',
         'description',
         'price',
+        'is_starting_price',
         'duration_minutes',
         'is_active',
     ];
@@ -24,6 +25,7 @@ class Service extends Model
     {
         return [
             'price' => 'integer',
+            'is_starting_price' => 'boolean',
             'duration_minutes' => 'integer',
             'is_active' => 'boolean',
         ];
@@ -41,6 +43,7 @@ class Service extends Model
 
     public function formattedPrice(): string
     {
-        return 'Rp ' . number_format($this->price, 0, ',', '.');
+        $price = 'Rp ' . number_format($this->price, 0, ',', '.');
+        return $this->is_starting_price ? 'Mulai ' . $price : $price;
     }
 }

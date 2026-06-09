@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index(): View
     {
         return view('admin.categories.index', [
-            'categories' => Category::orderBy('parent_category')->orderBy('name')->get(),
+            'categories' => Category::orderBy('name')->get(),
         ]);
     }
 
@@ -26,7 +26,6 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'parent_category' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'url'],
         ]);
@@ -46,7 +45,6 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'parent_category' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'url'],
         ]);
