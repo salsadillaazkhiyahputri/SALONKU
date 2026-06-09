@@ -1,0 +1,68 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam handwritten false
+
+skinparam usecase {
+  BackgroundColor LightPink
+  BorderColor Rose
+  ArrowColor DeepPink
+}
+skinparam actor {
+  BackgroundColor Rose
+  BorderColor DeepPink
+}
+skinparam rectangle {
+  BorderColor Rose
+}
+
+actor "Pengunjung (Guest)" as Guest
+actor "Pelanggan (Customer)" as Customer
+actor "Admin Salon" as Admin
+
+rectangle "Sistem Reservasi SalonKu" {
+  ' Guest Cases
+  usecase "Melihat Landing Page" as UC1
+  usecase "Mendaftar Akun (Register)" as UC2
+  usecase "Masuk (Login)" as UC3
+  
+  ' Customer Cases
+  usecase "Keluar (Logout)" as UC4
+  usecase "Melihat Katalog Layanan" as UC5
+  usecase "Membuat Reservasi Baru" as UC6
+  usecase "Melihat Riwayat Reservasi" as UC7
+  usecase "Mengubah Profil Akun" as UC8
+  
+  ' Admin Cases
+  usecase "Melihat Dashboard & Statistik" as UC9
+  usecase "Mengelola Kategori Layanan" as UC10
+  usecase "Mengelola Daftar Layanan" as UC11
+  usecase "Mengelola Data Stylist" as UC12
+  usecase "Memperbarui Status Reservasi" as UC13
+}
+
+' Relasi Pengunjung
+Guest --> UC1
+Guest --> UC2
+Guest --> UC3
+
+' Relasi Pelanggan (Customer)
+Customer --> UC3
+Customer --> UC4
+Customer --> UC5
+Customer --> UC6
+Customer --> UC7
+Customer --> UC8
+
+' Relasi Admin
+Admin --> UC3
+Admin --> UC4
+Admin --> UC9
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+
+' Dependencies (Include/Extend)
+UC6 ..> UC5 : <<include>>
+@enduml
