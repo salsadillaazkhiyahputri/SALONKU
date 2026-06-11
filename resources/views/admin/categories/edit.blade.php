@@ -12,7 +12,7 @@
     </div>
 
     <div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
-        <form action="{{ route('admin.categories.update', $category) }}" method="POST" class="p-6 sm:p-8">
+        <form action="{{ route('admin.categories.update', $category) }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8">
             @csrf
             @method('PUT')
             

@@ -57,7 +57,7 @@
                 <!-- User Profile & Actions -->
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     <!-- User Badge -->
-                    <a href="{{ route('customer.profile') }}" class="group flex items-center gap-2 rounded-full border-2 border-transparent bg-gray-50/50 p-1 pr-4 transition-all hover:bg-white hover:border-rose-100 hover:shadow-sm">
+                    <a href="{{ route('profile') }}" class="group flex items-center gap-2 rounded-full border-2 border-transparent bg-gray-50/50 p-1 pr-4 transition-all hover:bg-white hover:border-rose-100 hover:shadow-sm">
                         <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-rose-100 to-pink-100 text-sm font-black text-rose-600 shadow-inner group-hover:scale-105 transition-transform">
                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </div>

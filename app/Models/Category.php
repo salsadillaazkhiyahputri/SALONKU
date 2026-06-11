@@ -14,10 +14,26 @@ class Category extends Model
         'name',
         'description',
         'image',
+        'parent_id',
     ];
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function subCategories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 
     public function services(): HasMany
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function scopeMainCategories($query)
+    {
+        return $query->whereNull('parent_id');
     }
 }

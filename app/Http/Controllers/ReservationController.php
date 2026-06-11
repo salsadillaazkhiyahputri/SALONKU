@@ -16,9 +16,11 @@ class ReservationController extends Controller
 {
     public function customerDashboard(): View
     {
-        $categories = \App\Models\Category::with(['services' => function ($query) {
-            $query->where('is_active', true)->orderBy('name');
-        }])->get();
+        $categories = \App\Models\Category::mainCategories()->with(['subCategories' => function ($query) {
+            $query->with(['services' => function ($q) {
+                $q->where('is_active', true)->orderBy('name');
+            }])->orderBy('name');
+        }])->orderBy('name')->get();
 
         return view('customer.dashboard', [
             'categories' => $categories,
@@ -44,9 +46,11 @@ class ReservationController extends Controller
 
     public function create(Request $request): View
     {
-        $categories = \App\Models\Category::with(['services' => function ($query) {
-            $query->where('is_active', true)->orderBy('name');
-        }])->get();
+        $categories = \App\Models\Category::mainCategories()->with(['subCategories' => function ($query) {
+            $query->with(['services' => function ($q) {
+                $q->where('is_active', true)->orderBy('name');
+            }])->orderBy('name');
+        }])->orderBy('name')->get();
 
         return view('customer.reservations.create', [
             'categories' => $categories,

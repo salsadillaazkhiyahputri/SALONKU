@@ -32,7 +32,7 @@
     <div class="relative bg-white rounded-[2.5rem] shadow-xl shadow-rose-100/30 border border-rose-100 overflow-hidden">
         <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-gradient-to-br from-rose-50 to-pink-50 opacity-70 blur-3xl pointer-events-none"></div>
 
-        <form method="POST" action="{{ route('customer.profile.update') }}" class="relative z-10 p-8 sm:p-12 space-y-10">
+        <form method="POST" action="{{ route('profile.update') }}" class="relative z-10 p-8 sm:p-12 space-y-10">
             @csrf
             @method('PUT')
 

@@ -48,47 +48,45 @@
                     </div>
                     
                     <div class="space-y-8 max-h-[500px] overflow-y-auto pr-4 custom-scrollbar rounded-2xl">
-                        @php
-                            $groupedCategories = collect($categories)->groupBy('parent_category');
-                        @endphp
-
-                        @foreach($groupedCategories as $superName => $subCategories)
-                            <div class="bg-rose-50/30 rounded-[2rem] p-6 sm:p-8 border border-rose-100/50">
-                                <h3 class="font-serif text-3xl font-extrabold text-gray-900 mb-6 drop-shadow-sm">{{ $superName }}</h3>
-                                
-                                <div class="space-y-6">
-                                    @foreach($subCategories as $category)
-                                        @if($category->services->count() > 0)
-                                            <div>
-                                                <h4 class="font-bold text-rose-600 mb-3 flex items-center gap-2">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                                                    {{ $category->name }}
-                                                </h4>
-                                                <div class="grid sm:grid-cols-2 gap-4">
-                                                    @foreach($category->services as $service)
-                                                        <label class="group relative flex flex-col p-5 rounded-2xl border-2 border-gray-100 bg-white hover:border-rose-300 hover:shadow-md cursor-pointer transition-all has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50 has-[:checked]:shadow-rose-100">
-                                                            <div class="flex items-start justify-between mb-3">
-                                                                <input type="checkbox" name="service_ids[]" value="{{ $service->id }}" 
-                                                                    data-category="{{ $superName }}"
-                                                                    class="service-checkbox mt-1 w-5 h-5 text-rose-500 border-gray-300 rounded focus:ring-rose-500"
-                                                                    @checked(is_array(old('service_ids')) ? in_array($service->id, old('service_ids')) : (isset($selected_service) && $selected_service == $service->id))>
-                                                                <span class="text-sm font-black text-rose-600 bg-rose-100 px-3 py-1 rounded-full whitespace-nowrap">{{ $service->formattedPrice() }}</span>
-                                                            </div>
-                                                            <div class="mt-auto">
-                                                                <p class="text-base font-bold text-gray-900 group-hover:text-rose-600 transition-colors">{{ $service->name }}</p>
-                                                                <p class="text-sm font-medium text-gray-500 flex items-center gap-1.5 mt-2">
-                                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                                    {{ $service->duration_minutes }} menit
-                                                                </p>
-                                                            </div>
-                                                        </label>
-                                                    @endforeach
+                        @foreach($categories as $superCategory)
+                            @if($superCategory->subCategories->sum(fn($sub) => $sub->services->count()) > 0)
+                                <div class="bg-rose-50/30 rounded-[2rem] p-6 sm:p-8 border border-rose-100/50">
+                                    <h3 class="font-serif text-3xl font-extrabold text-gray-900 mb-6 drop-shadow-sm">{{ $superCategory->name }}</h3>
+                                    
+                                    <div class="space-y-6">
+                                        @foreach($superCategory->subCategories as $category)
+                                            @if($category->services->count() > 0)
+                                                <div>
+                                                    <h4 class="font-bold text-rose-600 mb-3 flex items-center gap-2">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                                                        {{ $category->name }}
+                                                    </h4>
+                                                    <div class="grid sm:grid-cols-2 gap-4">
+                                                        @foreach($category->services as $service)
+                                                            <label class="group relative flex flex-col p-5 rounded-2xl border-2 border-gray-100 bg-white hover:border-rose-300 hover:shadow-md cursor-pointer transition-all has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/50 has-[:checked]:shadow-rose-100">
+                                                                <div class="flex items-start justify-between mb-3">
+                                                                    <input type="checkbox" name="service_ids[]" value="{{ $service->id }}" 
+                                                                        data-category="{{ $superCategory->name }}"
+                                                                        class="service-checkbox mt-1 w-5 h-5 text-rose-500 border-gray-300 rounded focus:ring-rose-500"
+                                                                        @checked(is_array(old('service_ids')) ? in_array($service->id, old('service_ids')) : (isset($selected_service) && $selected_service == $service->id))>
+                                                                    <span class="text-sm font-black text-rose-600 bg-rose-100 px-3 py-1 rounded-full whitespace-nowrap">{{ $service->formattedPrice() }}</span>
+                                                                </div>
+                                                                <div class="mt-auto">
+                                                                    <p class="text-base font-bold text-gray-900 group-hover:text-rose-600 transition-colors">{{ $service->name }}</p>
+                                                                    <p class="text-sm font-medium text-gray-500 flex items-center gap-1.5 mt-2">
+                                                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                                        {{ $service->duration_minutes }} menit
+                                                                    </p>
+                                                                </div>
+                                                            </label>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
                     @error('service_ids')

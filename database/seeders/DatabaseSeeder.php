@@ -29,27 +29,45 @@ class DatabaseSeeder extends Seeder
             'phone' => '081298765432',
         ]);
 
-        // Kategori
-        $categoriesData = [
+        // Kategori Utama
+        $mains = [
+            'Hair Treatment' => 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80',
+            'Nails' => 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80',
+            'Face Treatment' => 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
+        ];
+
+        $mainIds = [];
+        foreach ($mains as $name => $image) {
+            $main = Category::create([
+                'name' => $name,
+                'image' => $image,
+                'description' => "Kategori Utama: $name",
+                'parent_id' => null,
+            ]);
+            $mainIds[$name] = $main->id;
+        }
+
+        // Sub Kategori
+        $subCategoriesData = [
             // Hair
-            ['name' => 'Hair Treatment', 'parent_category' => 'Hair Treatment', 'image' => 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan rambut dasar.'],
-            ['name' => 'Hair Colouring', 'parent_category' => 'Hair Treatment', 'image' => 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&w=800&q=80', 'description' => 'Pewarnaan rambut profesional.'],
-            ['name' => 'Hair Spa / Mask', 'parent_category' => 'Hair Treatment', 'image' => 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80', 'description' => 'Spa dan masker rambut.'],
+            ['name' => 'Hair Treatment', 'parent_id' => $mainIds['Hair Treatment'], 'image' => 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan rambut dasar.'],
+            ['name' => 'Hair Colouring', 'parent_id' => $mainIds['Hair Treatment'], 'image' => 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&w=800&q=80', 'description' => 'Pewarnaan rambut profesional.'],
+            ['name' => 'Hair Spa / Mask', 'parent_id' => $mainIds['Hair Treatment'], 'image' => 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80', 'description' => 'Spa dan masker rambut.'],
             
             // Nails
-            ['name' => 'Manicure', 'parent_category' => 'Nails', 'image' => 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan kuku tangan.'],
-            ['name' => 'Pedicure', 'parent_category' => 'Nails', 'image' => 'https://images.unsplash.com/photo-1516975080661-46bba2040bb0?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan kuku kaki.'],
-            ['name' => 'PO Press On Nail', 'parent_category' => 'Nails', 'image' => 'https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?auto=format&fit=crop&w=800&q=80', 'description' => 'Kuku palsu custom.'],
-            ['name' => 'Design', 'parent_category' => 'Nails', 'image' => 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?auto=format&fit=crop&w=800&q=80', 'description' => 'Seni desain kuku.'],
-            ['name' => 'Extension', 'parent_category' => 'Nails', 'image' => 'https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?auto=format&fit=crop&w=800&q=80', 'description' => 'Ekstensi kuku.'],
-            ['name' => 'Removal', 'parent_category' => 'Nails', 'image' => 'https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=800&q=80', 'description' => 'Penghapusan gel/ekstensi.'],
+            ['name' => 'Manicure', 'parent_id' => $mainIds['Nails'], 'image' => 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan kuku tangan.'],
+            ['name' => 'Pedicure', 'parent_id' => $mainIds['Nails'], 'image' => 'https://images.unsplash.com/photo-1516975080661-46bba2040bb0?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan kuku kaki.'],
+            ['name' => 'PO Press On Nail', 'parent_id' => $mainIds['Nails'], 'image' => 'https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?auto=format&fit=crop&w=800&q=80', 'description' => 'Kuku palsu custom.'],
+            ['name' => 'Design', 'parent_id' => $mainIds['Nails'], 'image' => 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?auto=format&fit=crop&w=800&q=80', 'description' => 'Seni desain kuku.'],
+            ['name' => 'Extension', 'parent_id' => $mainIds['Nails'], 'image' => 'https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?auto=format&fit=crop&w=800&q=80', 'description' => 'Ekstensi kuku.'],
+            ['name' => 'Removal', 'parent_id' => $mainIds['Nails'], 'image' => 'https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=800&q=80', 'description' => 'Penghapusan gel/ekstensi.'],
             
             // Face
-            ['name' => 'Face Treatment', 'parent_category' => 'Face Treatment', 'image' => 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan wajah.'],
+            ['name' => 'Face Treatment', 'parent_id' => $mainIds['Face Treatment'], 'image' => 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80', 'description' => 'Perawatan wajah.'],
         ];
 
         $categoryIds = [];
-        foreach ($categoriesData as $cat) {
+        foreach ($subCategoriesData as $cat) {
             $created = Category::create($cat);
             $categoryIds[$cat['name']] = $created->id;
         }
