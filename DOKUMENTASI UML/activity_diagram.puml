@@ -1,0 +1,41 @@
+@startuml
+|Customer|
+start
+:Buka Landing Page;
+if (Sudah punya akun?) then (Ya)
+  :Login;
+else (Tidak)
+  :Register;
+  :Login;
+endif
+
+:Sistem menampilkan Dashboard;
+:Memilih Kategori Utama\n(Hair, Nails, Face);
+:Memilih Sub-Layanan / Jasa;
+:Memilih Jadwal (Tanggal & Jam)\ndan Stylist;
+:Klik "Lakukan Reservasi";
+
+|Sistem|
+:Validasi input & ketersediaan slot (slot_hash);
+if (Slot tersedia?) then (Ya)
+  :Simpan data ke Database\n(Reservations, Reservation_Service, Reservation_Stylist);
+  :Tampilkan pesan Sukses;
+else (Tidak)
+  :Kembalikan ke form\ndengan pesan Error;
+  |Customer|
+  :Ubah Jadwal/Stylist;
+  detach
+endif
+
+|Admin|
+:Melihat daftar Reservasi Pending;
+:Memvalidasi dan mengubah status\n(Confirmed/Completed/Cancelled);
+
+|Sistem|
+:Update status Reservasi di Database;
+:Lepas slot (slot_hash = null)\njika status Cancelled;
+
+|Customer|
+:Melihat status di Riwayat Transaksi;
+stop
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+!define RECTANGLE rectangle
+!define DATABASE database
+
+node "Client Browser" as Client {
+    RECTANGLE "Blade Views / HTML / CSS / JS\n(resources/views)" as Views
+}
+
+node "Web Server (Laravel)" as Server {
+    RECTANGLE "Routes\n(routes/web.php)" as Routes
+    RECTANGLE "Controllers\n(app/Http/Controllers)" as Controllers
+    RECTANGLE "Models\n(app/Models)" as Models
+    RECTANGLE "Storage Lokal\n(storage/app/public)" as Storage
+}
+
+DATABASE "MySQL Database" as DB
+
+Client --> Routes : HTTP Request\n(GET/POST/PUT/PATCH/DELETE)
+Routes --> Controllers : Route to Action
+Controllers --> Models : Eloquent ORM (CRUD)
+Controllers --> Views : Return View & Data
+Controllers --> Storage : Read/Write Images/Files
+Models <--> DB : SQL Queries
+
+Views --> Client : HTTP Response (Rendered HTML)
+
+@enduml

@@ -1,0 +1,91 @@
+@startuml
+
+class User {
+    + id : bigint
+    + name : varchar
+    + email : varchar
+    + phone : varchar
+    + role : varchar
+    + password : varchar
+    + email_verified_at : datetime
+    + remember_token : varchar
+    + created_at : timestamp
+    + updated_at : timestamp
+    --
+    + reservations() : HasMany
+    + isAdmin() : bool
+    + isCustomer() : bool
+}
+
+class Category {
+    + id : bigint
+    + parent_id : bigint
+    + name : varchar
+    + description : text
+    + image : varchar
+    + created_at : timestamp
+    + updated_at : timestamp
+    --
+    + parent() : BelongsTo
+    + subCategories() : HasMany
+    + services() : HasMany
+    + scopeMainCategories() : void
+}
+
+class Service {
+    + id : bigint
+    + category_id : bigint
+    + name : varchar
+    + description : text
+    + price : integer
+    + is_starting_price : boolean
+    + duration_minutes : smallint
+    + is_active : boolean
+    + created_at : timestamp
+    + updated_at : timestamp
+    --
+    + category() : BelongsTo
+    + reservations() : BelongsToMany
+    + formattedPrice() : string
+}
+
+class Stylist {
+    + id : bigint
+    + name : varchar
+    + specialty : varchar
+    + status : enum('active', 'inactive')
+    + created_at : timestamp
+    + updated_at : timestamp
+    --
+    + reservations() : HasMany
+    + isActive() : bool
+    + scopeActive() : void
+}
+
+class Reservation {
+    + id : bigint
+    + user_id : bigint
+    + reservation_date : date
+    + start_time : time
+    + total_price : integer
+    + status : enum('pending', 'confirmed', 'completed', 'cancelled')
+    + notes : text
+    + created_at : timestamp
+    + updated_at : timestamp
+    --
+    + user() : BelongsTo
+    + services() : BelongsToMany
+    + stylists() : BelongsToMany
+    + generateSlotHash() : string
+    + statusLabel() : string
+    + statusColor() : string
+    + releaseSlot() : void
+}
+
+User "1" -- "*" Reservation : hasMany
+Category "1" -- "*" Category : hasMany (parent-child)
+Category "1" -- "*" Service : hasMany
+Service "*" -- "*" Reservation : belongsToMany
+Stylist "*" -- "*" Reservation : belongsToMany
+
+@enduml

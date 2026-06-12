@@ -1,0 +1,81 @@
+@startuml
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  name : varchar
+  email : varchar <<Unique>>
+  password : varchar
+  role : varchar
+  phone : varchar
+  email_verified_at : timestamp
+  ...
+}
+
+entity "categories" as categories {
+  * id : bigint <<PK>>
+  --
+  parent_id : bigint <<FK>>
+  name : varchar
+  description : text
+  image : varchar
+  ...
+}
+
+entity "services" as services {
+  * id : bigint <<PK>>
+  --
+  category_id : bigint <<FK>>
+  name : varchar
+  description : text
+  price : unsignedInteger
+  is_starting_price : boolean
+  duration_minutes : unsignedSmallInteger
+  is_active : boolean
+  ...
+}
+
+entity "stylists" as stylists {
+  * id : bigint <<PK>>
+  --
+  name : varchar
+  specialty : varchar
+  status : enum('active','inactive')
+  ...
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>>
+  reservation_date : date
+  start_time : time
+  total_price : unsignedInteger
+  status : enum('pending','confirmed','completed','cancelled')
+  notes : text
+  ...
+}
+
+entity "reservation_service" as rs {
+  * id : bigint <<PK>>
+  --
+  reservation_id : bigint <<FK>>
+  service_id : bigint <<FK>>
+}
+
+entity "reservation_stylist" as rst {
+  * id : bigint <<PK>>
+  --
+  reservation_id : bigint <<FK>>
+  stylist_id : bigint <<FK>>
+  slot_hash : varchar <<Unique>>
+}
+
+users ||--o{ reservations : "memiliki"
+categories ||--o{ categories : "sub-kategori"
+categories ||--o{ services : "mengelompokkan"
+reservations ||--|{ rs : "terdiri dari"
+services ||--o{ rs : "dipesan dalam"
+reservations ||--|{ rst : "ditangani oleh"
+stylists ||--o{ rst : "menangani"
+
+@enduml

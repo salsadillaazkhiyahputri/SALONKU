@@ -1,0 +1,40 @@
+@startuml
+actor Customer
+boundary "Blade View\n(Reservations/Create)" as View
+control "Router\n(web.php)" as Router
+control "ReservationController" as Controller
+entity "Reservation\n(Model)" as ModelRes
+entity "Database" as DB
+
+Customer -> View : Mengisi form (Service, Stylist, Tgl, Jam) & Submit
+View -> Router : POST /customer/reservations
+Router -> Controller : store(Request)
+activate Controller
+
+Controller -> Controller : Validasi Input & Cek Ketersediaan Stylist
+Controller -> DB : Cek status aktif Service & Stylist
+DB --> Controller : Data valid
+
+Controller -> ModelRes : generateSlotHash()
+Controller -> DB : Cek conflict slot_hash dengan lockForUpdate()
+alt Slot Bentrok / Conflict
+    DB --> Controller : Konflik ditemukan
+    Controller --> View : Redirect back() + Pesan Error
+    View --> Customer : Tampilkan Error "Slot penuh"
+else Slot Tersedia
+    Controller -> ModelRes : create()
+    activate ModelRes
+    ModelRes -> DB : INSERT INTO reservations
+    DB --> ModelRes : Success
+    ModelRes --> Controller : $reservation
+    deactivate ModelRes
+    
+    Controller -> DB : INSERT INTO reservation_service (attach)
+    Controller -> DB : INSERT INTO reservation_stylist (attach syncData)
+    DB --> Controller : Success
+    
+    Controller --> View : Redirect route('customer.dashboard') + Pesan Sukses
+    View --> Customer : Tampilkan Pesan Sukses "Reservasi berhasil dibuat"
+end
+deactivate Controller
+@enduml

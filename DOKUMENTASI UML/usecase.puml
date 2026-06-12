@@ -1,0 +1,52 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Customer" as C
+actor "Admin" as A
+
+rectangle "Sistem SalonKu" {
+    usecase "Registrasi Akun" as UC1
+    usecase "Login" as UC2
+    usecase "Kelola Profil" as UC3
+    usecase "Lihat Kategori Utama\n(Hair, Nails, Face)" as UC4
+    usecase "Lihat Sub-Layanan" as UC5
+    usecase "Pilih Jadwal & Stylist" as UC6
+    usecase "Lakukan Reservasi" as UC7
+    usecase "Lihat Riwayat Transaksi" as UC8
+    usecase "Logout" as UC9
+    
+    usecase "Dashboard Admin\n(Metrik & Data)" as UC10
+    usecase "Kelola Rumpun Kategori" as UC11
+    usecase "Kelola Sub-Layanan / Jasa" as UC12
+    usecase "Kelola Data Stylist" as UC13
+    usecase "Proses / Validasi Reservasi\n(Konfirmasi/Selesai/Batal)" as UC14
+}
+
+C --> UC1
+C --> UC2
+C --> UC3
+C --> UC4
+C --> UC5
+C --> UC6
+C --> UC7
+C --> UC8
+C --> UC9
+
+A --> UC2
+A --> UC9
+A --> UC10
+A --> UC11
+A --> UC12
+A --> UC13
+A --> UC14
+
+UC7 ..> UC2 : <<include>>
+UC8 ..> UC2 : <<include>>
+UC10 ..> UC2 : <<include>>
+UC11 ..> UC2 : <<include>>
+UC12 ..> UC2 : <<include>>
+UC13 ..> UC2 : <<include>>
+UC14 ..> UC2 : <<include>>
+
+@enduml
