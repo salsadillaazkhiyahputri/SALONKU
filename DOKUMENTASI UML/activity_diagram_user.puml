@@ -1,0 +1,46 @@
+@startuml
+title Activity Diagram - Customer
+
+|Customer|
+start
+:Buka Aplikasi / Website;
+
+if (Sudah punya akun?) then (Belum)
+  :Registrasi Akun;
+else (Sudah)
+endif
+
+:Login;
+
+|Sistem|
+:Verifikasi Kredensial;
+
+|Customer|
+if (Kredensial Valid?) then (Ya)
+  
+  fork
+    :Kelola Profil;
+  fork again
+    :Lihat Riwayat Transaksi;
+  fork again
+    :Lihat Kategori Utama\n(Hair, Nails, Face);
+    :Lihat Sub-Layanan;
+    :Pilih Jadwal & Stylist;
+    :Lakukan Reservasi;
+  end fork
+  
+  |Sistem|
+  :Simpan Data / Perubahan;
+  
+  |Customer|
+  
+  :Logout;
+  stop
+
+else (Tidak)
+  |Sistem|
+  :Tampilkan Pesan Error;
+  stop
+endif
+
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+title Activity Diagram - Admin
+
+|Admin|
+start
+:Buka Halaman Login Admin;
+:Masukkan Username & Password;
+:Submit Login;
+
+|Sistem|
+:Verifikasi Kredensial;
+
+|Admin|
+if (Kredensial Valid?) then (Ya)
+  
+  :Akses Dashboard Admin\n(Lihat Metrik & Data);
+  
+  fork
+    :Kelola Rumpun Kategori\n(Tambah/Edit/Hapus);
+  fork again
+    :Kelola Sub-Layanan / Jasa\n(Tambah/Edit/Hapus);
+  fork again
+    :Kelola Data Stylist\n(Tambah/Edit/Hapus);
+  fork again
+    :Lihat Daftar Reservasi Masuk;
+    :Proses / Validasi Reservasi\n(Konfirmasi/Selesai/Batal);
+  end fork
+  
+  |Sistem|
+  :Update Data / Status Reservasi;
+  
+  |Admin|
+  
+  :Logout;
+  stop
+
+else (Tidak)
+  |Sistem|
+  :Tampilkan Pesan Error\n(Login Gagal);
+  stop
+endif
+
+@enduml

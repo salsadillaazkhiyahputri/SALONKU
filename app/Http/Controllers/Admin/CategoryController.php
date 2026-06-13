@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index(): View
     {
         return view('admin.categories.index', [
-            'categories' => Category::orderBy('name')->get(),
+            'categories' => Category::mainCategories()->with('subCategories')->orderBy('name')->get(),
         ]);
     }
 

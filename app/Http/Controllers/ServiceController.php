@@ -11,10 +11,11 @@ class ServiceController extends Controller
 {
     public function index(): View
     {
-        $categories = \App\Models\Category::whereNotNull('parent_id')
-            ->with(['services' => function ($query) {
-                $query->orderBy('name');
-            }])->orderBy('parent_id')->orderBy('name')->get();
+        $categories = \App\Models\Category::mainCategories()->with(['subCategories' => function ($query) {
+            $query->with(['services' => function ($q) {
+                $q->orderBy('name');
+            }])->orderBy('name');
+        }])->orderBy('name')->get();
 
         return view('admin.services.index', [
             'categories' => $categories,
